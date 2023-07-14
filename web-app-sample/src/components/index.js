@@ -1,2 +1,5 @@
 import Title from "./Title/Title";
-export {Title};
+import NavBar from "./NavBar/NavBar";
+import TextInput from "./TextInput/TextInput";
+import Button from "./Button/Button";
+export {Title,NavBar,TextInput,Button};

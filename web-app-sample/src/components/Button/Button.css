@@ -1,0 +1,15 @@
+.buutonMain {
+    background-color: black;
+    color: white;
+    width: 150px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.buutonMain:hover {
+    background-color: #2b2b2b;
+}

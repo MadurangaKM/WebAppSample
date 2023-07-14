@@ -1,0 +1,27 @@
+.mainTitle {
+    font-size: 30px;
+    position: relative;
+    padding-bottom: 10px;
+    display: inline-block;
+    margin-bottom: 50px;
+}
+
+.subOne {
+    font-weight: 200;
+}
+
+.subTwo {
+    margin-left: 10px;
+    font-weight: 600;
+}
+
+.mainTitle::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    height: 2px;
+    background-color: black;
+}

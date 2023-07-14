@@ -1,0 +1,34 @@
+.textInputMain {
+    margin: 10px;
+}
+
+.textInput {
+    height: 40px;
+    padding-left: 10px;
+    font-family: "Poppins";
+    text-decoration: none;
+    background-color: rgba(225, 225, 225, 0.7);
+    border: 1px solid;
+
+}
+
+.textInput:checked {
+    color: black;
+}
+
+*:focus {
+    outline: none;
+}
+
+#inputHelperText {
+    width: 100px;
+    text-align: end;
+}
+
+@media only screen and (max-width: 768px) {
+    #inputHelperText {
+        text-align: start;
+        margin-left: 10px;
+    }
+
+}

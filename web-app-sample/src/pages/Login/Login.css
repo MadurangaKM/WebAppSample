@@ -1,3 +1,61 @@
-.main{
-    background-color: aqua;
+.mainLogin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 80vh;
+}
+
+.loginTextInputContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginCheckBoxContaine {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: -5px;
+}
+
+.loginRegister {
+    margin-top: 20px;
+
+}
+
+.loginRegisterBtn {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.loginButton {
+    margin-left: 111px;
+}
+
+.loginInner {
+    margin-left: 10%;
+}
+
+@media only screen and (max-width: 768px) {
+    .loginInner {
+        margin-left: 0%;
+    }
+
+    .loginButton {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .loginTextInputContainer {
+        flex-direction: column;
+        align-items: unset;
+
+    }
+
+    .loginCheckBoxContaine {
+        justify-content: start;
+    }
 }

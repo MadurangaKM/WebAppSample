@@ -1,2 +1,5 @@
 import Login from "./Login/Login";
-export {Login}
+import Profile from "./Profile/Profile";
+import EditProfile from "./Profile/EditProfile";
+import MyContacts from "./MyContacts/MyContacts";
+export { Login, Profile, MyContacts, EditProfile };
