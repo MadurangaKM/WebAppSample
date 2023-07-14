@@ -50,7 +50,7 @@ const Login = () => {
         setError("Invalid credentials");
       }
     } else {
-      setError("Invalid credentials");
+      setError("No account found, Please Sign Up");
     }
   };
   return (

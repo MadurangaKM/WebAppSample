@@ -6,18 +6,22 @@ import { useNavigate } from "react-router-dom";
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const storedUserData = localStorage.getItem("userData");
+  const isLoginPage = window.location.pathname.includes("/login");
   const navigate = useNavigate();
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
   const handleLogout = () => {
-    localStorage.clear();
-    window.location.reload();
+    setIsOpen(!isOpen);
+    return navigate("/login");
+
+    // localStorage.clear();
+    // window.location.reload();
   };
   return (
     <div className="mainNav">
       <img src={Logo} alt="Logo" className="logoNav" />
-      {storedUserData && (
+      {storedUserData && !isLoginPage && (
         <>
           <div
             className={`hamburger ${isOpen ? "open" : ""}`}
@@ -32,6 +36,7 @@ const NavBar = () => {
               <ul>
                 <li
                   onClick={() => {
+                    setIsOpen(!isOpen);
                     return navigate("/contacts");
                   }}
                 >
@@ -39,6 +44,7 @@ const NavBar = () => {
                 </li>
                 <li
                   onClick={() => {
+                    setIsOpen(!isOpen);
                     return navigate("/profile");
                   }}
                 >
@@ -46,6 +52,7 @@ const NavBar = () => {
                 </li>
                 <li
                   onClick={() => {
+                    setIsOpen(!isOpen);
                     return navigate("/edit-profile");
                   }}
                 >

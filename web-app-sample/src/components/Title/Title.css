@@ -1,3 +1,5 @@
+@import url('https://unpkg.com/css.gg@2.0.0/icons/css/pen.css');
+
 .mainTitle {
     font-size: 30px;
     position: relative;
@@ -24,4 +26,57 @@
     width: 50%;
     height: 2px;
     background-color: black;
+}
+
+.mainTitle2 {
+    font-size: 30px;
+    position: relative;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.titleBlackLine {
+    background-color: black;
+    height: 3px;
+    width: 100%;
+    margin-left: 15px;
+    margin-top: -8px;
+    margin-bottom: 12px;
+
+}
+
+.title-button {
+    font-size: 16px;
+    width: 150px;
+    margin-bottom: 18px;
+    margin-left: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+    text-decoration: underline;
+}
+
+.title-btn-text {
+    margin-left: 10px;
+}
+
+.title-back-btn {
+    font-size: 16px;
+    width: 130px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    text-transform: capitalize;
+    text-decoration: underline;
+}
+
+@media only screen and (max-width: 768px) {
+    .title-btn-text {
+        visibility: hidden;
+    }
+
+    .title-back-btn {
+        width: 230px;
+    }
 }
