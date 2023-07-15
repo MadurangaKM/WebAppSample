@@ -10,19 +10,13 @@ const Profile = (props) => {
   const [activeTab, setActiveTab] = useState("basic");
   const [isProfileEdit, setProfileEdit] = useState(props.isEdit);
   const storedUserData = JSON.parse(localStorage.getItem("profileData"));
+  const [selectedImage, setSelectedImage] = useState(
+    localStorage.getItem("profileImage")
+  );
+  const [savedImage, setSavedImage] = useState(
+    localStorage.getItem("savedImage")
+  );
   const location = useLocation();
-  useEffect(() => {
-    if (location.pathname === "/edit-profile") {
-      if (storedUserData) {
-        setProfileData(storedUserData);
-      }
-      setProfileEdit(true);
-    }
-    if (location.pathname === "/profile") {
-      setProfileEdit(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
   const [profileData, setProfileData] = useState({
     salutation: 1,
     firstName: "",
@@ -44,6 +38,18 @@ const Profile = (props) => {
     music: "",
     movie: "",
   });
+  useEffect(() => {
+    if (location.pathname === "/edit-profile") {
+      if (storedUserData) {
+        setProfileData(storedUserData);
+      }
+      setProfileEdit(true);
+    }
+    if (location.pathname === "/profile") {
+      setProfileEdit(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
   const [profileDataError, setProfileDataError] = useState({
     firstName: false,
     lastName: false,
@@ -94,6 +100,7 @@ const Profile = (props) => {
     );
     setProfileData(resetData);
     setProfileEdit(false);
+    setSelectedImage(null);
   };
   const handleSave = () => {
     const isEmpty = Helper.errorEmptyChecker(profileData, [
@@ -123,20 +130,61 @@ const Profile = (props) => {
         });
         return updatedData;
       });
+      if (
+        profileData.firstName !== "" &&
+        profileData.lastName !== "" &&
+        profileData.email !== ""
+      ) {
+        setActiveTab("additional");
+      }
       return;
     }
     localStorage.setItem("profileData", JSON.stringify(profileData));
     setProfileEdit(false);
+    if (selectedImage) {
+      localStorage.setItem("savedImage", selectedImage);
+      setSavedImage(selectedImage);
+    }
   };
-  console.log(
-    "check data",
-    getNameFromValue(Defs.countries, storedUserData.country)
-  );
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      const imageData = e.target.result;
+      setSelectedImage(imageData);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
   const renderBasicDetails = () => {
     return (
       <div className="profile-main-tab-content">
         <div className="profile-img">
-          <img src={ProfileImg} alt="profile" style={{ width: "120px" }} />
+          {!savedImage && !selectedImage && (
+            <img
+              src={ProfileImg}
+              alt="profile"
+              style={{ width: "120px", marginBottom: "20px" }}
+            />
+          )}
+          {savedImage && !selectedImage && (
+            <img src={savedImage} alt="Profile" style={{ width: "80px" }} />
+          )}
+          {selectedImage && (
+            <img src={selectedImage} alt="Profile" style={{ width: "80px" }} />
+          )}
+          {isProfileEdit && (
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              style={{ marginTop: "20px" }}
+            />
+          )}
         </div>
         <div className="profile-content">
           <span style={{ fontWeight: 600, marginTop: 20 }}>Salutation*</span>
@@ -149,7 +197,8 @@ const Profile = (props) => {
             />
           ) : (
             <span>
-              {getNameFromValue(Defs.salutation, storedUserData.salutation)}
+              {storedUserData &&
+                getNameFromValue(Defs.salutation, storedUserData.salutation)}
             </span>
           )}
 
@@ -173,7 +222,7 @@ const Profile = (props) => {
               }}
             />
           ) : (
-            <span>{storedUserData.firstName}</span>
+            <span>{storedUserData && storedUserData.firstName}</span>
           )}
 
           <span style={{ fontWeight: 600, marginTop: 20 }}>Last Name*</span>
@@ -196,7 +245,7 @@ const Profile = (props) => {
               }}
             />
           ) : (
-            <span>{storedUserData.lastName}</span>
+            <span>{storedUserData && storedUserData.lastName}</span>
           )}
           <span style={{ fontWeight: 600, marginTop: 20 }}>Email Address*</span>
           {isProfileEdit ? (
@@ -220,7 +269,7 @@ const Profile = (props) => {
               }}
             />
           ) : (
-            <span>{storedUserData.email}</span>
+            <span>{storedUserData && storedUserData.email}</span>
           )}
           {isProfileEdit && (
             <div className="profile-button-group">
@@ -237,6 +286,16 @@ const Profile = (props) => {
             </div>
           )}
           {isProfileEdit && <div className="mandotory">*Mandatory field</div>}
+
+          {!Object.values(profileDataError).every((value) => value === false) &&
+            profileData.firstName !== "" &&
+            profileData.lastName !== "" &&
+            profileDataError.email === false &&
+            isProfileEdit && (
+              <div style={{ fontSize: 12, color: "red", marginTop: "-18px" }}>
+                Please fill mandotory fileds in additional section
+              </div>
+            )}
         </div>
       </div>
     );
@@ -254,7 +313,7 @@ const Profile = (props) => {
               margin
               error={
                 profileDataError.mobileNumber
-                  ? "Valid singapore mobile number is required"
+                  ? "Valid mobile number is required, Eg +65XXXXXXXX"
                   : ""
               }
               value={profileData.mobileNumber}
@@ -274,7 +333,7 @@ const Profile = (props) => {
               }}
             />
           ) : (
-            <span>{storedUserData.mobileNumber}</span>
+            <span>{storedUserData && storedUserData.mobileNumber}</span>
           )}
           <span style={{ fontWeight: 600, marginTop: 20 }}>Home address*</span>
           {isProfileEdit ? (
@@ -299,7 +358,7 @@ const Profile = (props) => {
               }}
             />
           ) : (
-            <span>{storedUserData.homeAddress}</span>
+            <span>{storedUserData && storedUserData.homeAddress}</span>
           )}
           <span style={{ fontWeight: 600, marginTop: 20 }}>Country*</span>
           {isProfileEdit ? (
@@ -311,7 +370,8 @@ const Profile = (props) => {
             />
           ) : (
             <span>
-              {getNameFromValue(Defs.countries, storedUserData.country)}
+              {storedUserData &&
+                getNameFromValue(Defs.countries, storedUserData.country)}
             </span>
           )}
           <span style={{ fontWeight: 600, marginTop: 20 }}>Postal Code*</span>
@@ -336,7 +396,7 @@ const Profile = (props) => {
               }}
             />
           ) : (
-            <span>{storedUserData.postCode}</span>
+            <span>{storedUserData && storedUserData.postCode}</span>
           )}
           <span style={{ fontWeight: 600, marginTop: 20 }}>Nationality*</span>
           {isProfileEdit ? (
@@ -348,7 +408,11 @@ const Profile = (props) => {
             />
           ) : (
             <span>
-              {getNameFromValue(Defs.nationalities, storedUserData.nationality)}
+              {storedUserData &&
+                getNameFromValue(
+                  Defs.nationalities,
+                  storedUserData.nationality
+                )}
             </span>
           )}
           <span style={{ fontWeight: 600, marginTop: 20 }}>Date of birth</span>
@@ -377,7 +441,7 @@ const Profile = (props) => {
               }}
             />
           ) : (
-            <span>{storedUserData.dob}</span>
+            <span>{storedUserData && storedUserData.dob}</span>
           )}
           <span style={{ fontWeight: 600, marginTop: 20 }}>Gender</span>
           {isProfileEdit ? (
@@ -388,7 +452,10 @@ const Profile = (props) => {
               name="gender"
             />
           ) : (
-            <span>{getNameFromValue(Defs.gender, storedUserData.gender)}</span>
+            <span>
+              {storedUserData &&
+                getNameFromValue(Defs.gender, storedUserData.gender)}
+            </span>
           )}
           <span style={{ fontWeight: 600, marginTop: 20 }}>
             Maritial Status
@@ -402,7 +469,8 @@ const Profile = (props) => {
             />
           ) : (
             <span>
-              {getNameFromValue(Defs.maritial, storedUserData.maritialStatus)}
+              {storedUserData &&
+                getNameFromValue(Defs.maritial, storedUserData.maritialStatus)}
             </span>
           )}
         </div>
@@ -424,7 +492,11 @@ const Profile = (props) => {
             />
           ) : (
             <span>
-              {getNameFromValue(Defs.salutation, storedUserData.salutationMari)}
+              {storedUserData &&
+                getNameFromValue(
+                  Defs.salutation,
+                  storedUserData.salutationMari
+                )}
             </span>
           )}
           <span style={{ fontWeight: 600, marginTop: 20 }}>First name</span>
@@ -442,7 +514,7 @@ const Profile = (props) => {
               }}
             />
           ) : (
-            <span>{storedUserData.firstNameSalu}</span>
+            <span>{storedUserData && storedUserData.firstNameSalu}</span>
           )}
           <span style={{ fontWeight: 600, marginTop: 20 }}>Last name</span>
           {isProfileEdit ? (
@@ -459,7 +531,7 @@ const Profile = (props) => {
               }}
             />
           ) : (
-            <span>{storedUserData.lastNameSalu}</span>
+            <span>{storedUserData && storedUserData.lastNameSalu}</span>
           )}
         </div>
       </div>
@@ -487,7 +559,7 @@ const Profile = (props) => {
               }}
             />
           ) : (
-            <span>{storedUserData.hobbies}</span>
+            <span>{storedUserData && storedUserData.hobbies}</span>
           )}
           <span style={{ fontWeight: 600, marginTop: 20 }}>
             Favorite sports
@@ -506,7 +578,7 @@ const Profile = (props) => {
               }}
             />
           ) : (
-            <span>{storedUserData.sports}</span>
+            <span>{storedUserData && storedUserData.sports}</span>
           )}
           <span style={{ fontWeight: 600, marginTop: 20 }}>
             Preferred music genres
@@ -525,7 +597,7 @@ const Profile = (props) => {
               }}
             />
           ) : (
-            <span>{storedUserData.music}</span>
+            <span>{storedUserData && storedUserData.music}</span>
           )}
           <span style={{ fontWeight: 600, marginTop: 20 }}>
             Preferred movie/TV shows
@@ -544,7 +616,7 @@ const Profile = (props) => {
               }}
             />
           ) : (
-            <span>{storedUserData.movie}</span>
+            <span>{storedUserData && storedUserData.movie}</span>
           )}
         </div>
       </div>
@@ -561,8 +633,38 @@ const Profile = (props) => {
           isBack={isProfileEdit}
           onClick={() => {
             setProfileEdit(!isProfileEdit);
+            setSelectedImage(null);
+            const { salutation, gender, maritialStatus, country, nationality } =
+              profileData;
+            setProfileDataError((prevErrors) => {
+              const updatedErrors = { ...prevErrors };
+              Object.keys(updatedErrors).forEach((key) => {
+                updatedErrors[key] = false;
+              });
+              return updatedErrors;
+            });
+            const resetData = Object.keys(profileData).reduce(
+              (acc, key) => {
+                if (
+                  key !== "salutation" &&
+                  key !== "gender" &&
+                  key !== "maritialStatus" &&
+                  key !== "country" &&
+                  key !== "nationality"
+                ) {
+                  acc[key] = "";
+                }
+                return acc;
+              },
+              { salutation, gender, maritialStatus, country, nationality }
+            );
+
             if (isProfileEdit === false) {
-              setProfileData(storedUserData);
+              if (storedUserData) {
+                setProfileData(storedUserData);
+              } else {
+                setProfileData(resetData);
+              }
               setProfileDataError((prevErrors) => {
                 const updatedErrors = { ...prevErrors };
                 Object.keys(updatedErrors).forEach((key) => {
@@ -588,7 +690,7 @@ const Profile = (props) => {
           >
             Additional Details
           </button>
-          {storedUserData.maritialStatus === 2 && (
+          {storedUserData && storedUserData.maritialStatus === 2 && (
             <button
               className={`tab ${activeTab === "spouse" ? "active" : ""}`}
               onClick={() => handleTabChange("spouse")}
@@ -607,6 +709,7 @@ const Profile = (props) => {
           {activeTab === "basic" && renderBasicDetails()}
           {activeTab === "additional" && renderAdditionalDetails()}
           {activeTab === "spouse" &&
+            storedUserData &&
             storedUserData.maritialStatus === 2 &&
             renderSpouseDetails()}
           {activeTab === "preferences" && renderPersonalPreferences()}

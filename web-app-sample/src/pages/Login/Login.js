@@ -10,6 +10,7 @@ const Login = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [keepLoggedIn, setKeepLoggedIn] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const handleSignUp = () => {
     if (userId === "" || password === "" || confirmPassword === "") {
       setError("Plesse fill all fileds");
@@ -69,8 +70,13 @@ const Login = () => {
           <div className="loginTextInputContainer">
             <div id="inputHelperText"> Password*</div>
             <TextInput
-              type="password"
+              isPasswordComponent
+              showPassword={showPassword}
+              type={showPassword ? "text" : "password"}
               value={password}
+              passwordOnclic={() => {
+                setShowPassword(!showPassword);
+              }}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
@@ -78,7 +84,12 @@ const Login = () => {
             <div className="loginTextInputContainer">
               <div id="inputHelperText"> Confirm Password*</div>
               <TextInput
-                type="password"
+                isPasswordComponent
+                showPassword={showPassword}
+                type={showPassword ? "text" : "password"}
+                passwordOnclic={() => {
+                  setShowPassword(!showPassword);
+                }}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
@@ -91,7 +102,7 @@ const Login = () => {
                 checked={keepLoggedIn}
                 onChange={(e) => setKeepLoggedIn(e.target.checked)}
               />
-              Keep me logged in
+              <span style={{ marginTop: "-7px" }}>Keep me logged in</span>
             </div>
           )}
           {isRegister ? (
@@ -118,6 +129,23 @@ const Login = () => {
               }}
             >
               Register here.
+            </span>
+          </div>
+        )}
+        {isRegister && (
+          <div className="loginRegister">
+            Has account?{" "}
+            <span
+              className="loginRegisterBtn"
+              onClick={() => {
+                setIsRegister(false);
+                setConfirmPassword("");
+                setPassword("");
+                setUserId("");
+                setError("");
+              }}
+            >
+              Login here.
             </span>
           </div>
         )}
