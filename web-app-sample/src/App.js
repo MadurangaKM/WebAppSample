@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation} from "react-router-dom";
 import "./App.css";
 import { NavBar } from "./components";
 import { Login, MyContacts, Profile } from "./pages";
@@ -8,6 +8,8 @@ import { ProtectedRoute } from "./Routers/ProtectedRoute";
 function App() {
   const storedUserData = localStorage.getItem("userData");
   const isLogout = JSON.parse(localStorage.getItem("logout"));
+  const location = useLocation();
+  const isProfile = location.pathname === '/edit-profile'||location.pathname === '/profile';
   return (
     <div className="main">
       <NavBar />
@@ -43,7 +45,7 @@ function App() {
         />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      <div
+      {!isProfile&& <div
         style={{
           cursor: "pointer",
           display: "flex",
@@ -56,7 +58,8 @@ function App() {
         }}
       >
         <p>© {new Date().getFullYear()} maduranga.me</p>
-      </div>
+      </div>}
+     
     </div>
   );
 }

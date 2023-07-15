@@ -74,7 +74,7 @@ const Profile = (props) => {
     return item ? item.name : "";
   };
   const handleCancel = () => {
-    const { salutation, gender, maritialStatus, country, nationality } =
+    const { salutation, gender, maritialStatus, country, nationality,salutationMari } =
       profileData;
     setProfileDataError((prevErrors) => {
       const updatedErrors = { ...prevErrors };
@@ -90,13 +90,14 @@ const Profile = (props) => {
           key !== "gender" &&
           key !== "maritialStatus" &&
           key !== "country" &&
-          key !== "nationality"
+          key !== "nationality" &&
+          key !== "salutationMari"
         ) {
           acc[key] = "";
         }
         return acc;
       },
-      { salutation, gender, maritialStatus, country, nationality }
+      { salutation, gender, maritialStatus, country, nationality,salutationMari }
     );
     setProfileData(resetData);
     setProfileEdit(false);
@@ -690,7 +691,7 @@ const Profile = (props) => {
           >
             Additional Details
           </button>
-          {storedUserData && storedUserData.maritialStatus === 2 && (
+          {profileData.maritialStatus === 2 && (
             <button
               className={`tab ${activeTab === "spouse" ? "active" : ""}`}
               onClick={() => handleTabChange("spouse")}
@@ -709,8 +710,7 @@ const Profile = (props) => {
           {activeTab === "basic" && renderBasicDetails()}
           {activeTab === "additional" && renderAdditionalDetails()}
           {activeTab === "spouse" &&
-            storedUserData &&
-            storedUserData.maritialStatus === 2 &&
+           profileData.maritialStatus===2 &&
             renderSpouseDetails()}
           {activeTab === "preferences" && renderPersonalPreferences()}
           {isProfileEdit && activeTab !== "basic" && (
