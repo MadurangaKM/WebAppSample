@@ -13,10 +13,8 @@ const NavBar = () => {
   };
   const handleLogout = () => {
     setIsOpen(!isOpen);
+    localStorage.setItem("logout", true);
     return navigate("/login");
-
-    // localStorage.clear();
-    // window.location.reload();
   };
   return (
     <div className="mainNav">

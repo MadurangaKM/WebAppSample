@@ -1,7 +1,6 @@
 import React from "react";
 import "./TextInput.css";
 const TextInput = (props) => {
-  console.log("check here", props.isPasswordComponent);
   return (
     <div className="textInputMain">
       <input

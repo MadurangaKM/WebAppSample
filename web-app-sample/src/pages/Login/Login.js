@@ -27,6 +27,7 @@ const Login = () => {
       password,
     };
     localStorage.setItem("userData", JSON.stringify(userData));
+    localStorage.setItem("logout", false);
     window.location.href = "/";
     setIsRegister(false);
   };
@@ -45,7 +46,7 @@ const Login = () => {
           document.cookie = `keepLoggedIn=true; expires=${expirationDate.toUTCString()}`;
           return navigate("/contacts");
         }
-
+        localStorage.setItem("logout", false);
         return navigate("/contacts");
       } else {
         setError("Invalid credentials");

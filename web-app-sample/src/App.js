@@ -7,11 +7,15 @@ import { ProtectedRoute } from "./Routers/ProtectedRoute";
 
 function App() {
   const storedUserData = localStorage.getItem("userData");
+  const isLogout = JSON.parse(localStorage.getItem("logout"));
   return (
     <div className="main">
       <NavBar />
       <Routes>
-        <Route path="/" element={storedUserData ? <MyContacts /> : <Login />} />
+        <Route
+          path="/"
+          element={storedUserData && !isLogout ? <MyContacts /> : <Login />}
+        />
         <Route path="/login" element={<Login />} />
         <Route
           path="/profile"
