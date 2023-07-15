@@ -1,0 +1,60 @@
+.filter-container {
+    display: inline-block;
+    position: relative;
+    margin-top: 10px;
+}
+
+.select-component {
+    appearance: none;
+    padding: 8px 12px;
+    border: 1px solid #1c1c1c;
+    background-color: #e8e8e8;
+    cursor: pointer;
+    height: 45px;
+    width: 100% !important;
+}
+
+.filter-select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #e8e8e8;
+}
+
+.filter-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.filter-option {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.filter-option:hover {
+    background-color: #f0f0f0;
+}
+
+.filter-option.selected {
+    background-color: #e1e1e1;
+}
+
+.filter-arrow {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 4px 0 4px;
+    border-color: #666 transparent transparent transparent;
+    pointer-events: none;
+}

@@ -13,3 +13,28 @@
 .buutonMain:hover {
     background-color: #2b2b2b;
 }
+
+.buttonSecondary {
+    color: black;
+    background-color: none;
+    border: 2px solid black;
+    margin-left: 8px;
+    width: 150px;
+    height: 46px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.disable {
+    background-color: rgb(204, 204, 204);
+    color: white;
+    width: 150px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+}

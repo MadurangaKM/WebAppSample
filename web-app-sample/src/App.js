@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import { NavBar } from "./components";
-import { Login, MyContacts, Profile, EditProfile } from "./pages";
+import { Login, MyContacts, Profile } from "./pages";
 import { ProtectedRoute } from "./Routers/ProtectedRoute";
 
 function App() {
@@ -10,11 +10,6 @@ function App() {
   return (
     <div className="main">
       <NavBar />
-
-      {/* <div className="main">
-      <NavBar/>
-     <Login className="center"/>
-    </div> */}
       <Routes>
         <Route path="/" element={storedUserData ? <MyContacts /> : <Login />} />
         <Route path="/login" element={<Login />} />
@@ -22,7 +17,7 @@ function App() {
           path="/profile"
           element={
             <ProtectedRoute>
-              <Profile />
+              <Profile isEdit={false} />
             </ProtectedRoute>
           }
         />
@@ -30,7 +25,7 @@ function App() {
           path="/edit-profile"
           element={
             <ProtectedRoute>
-              <EditProfile />
+              <Profile isEdit={true} />
             </ProtectedRoute>
           }
         />

@@ -1,5 +1,6 @@
 .textInputMain {
     margin: 10px;
+
 }
 
 .textInput {
@@ -7,7 +8,7 @@
     padding-left: 10px;
     font-family: "Poppins";
     text-decoration: none;
-    background-color: rgba(225, 225, 225, 0.7);
+    background-color: rgb(232, 232, 232);
     border: 1px solid;
 
 }
@@ -23,6 +24,13 @@
 #inputHelperText {
     width: 100px;
     text-align: end;
+}
+
+.input-error {
+    font-size: 12px;
+    color: red;
+    margin-left: -10px;
+    padding-top: 5px;
 }
 
 @media only screen and (max-width: 768px) {

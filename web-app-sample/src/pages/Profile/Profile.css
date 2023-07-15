@@ -1,3 +1,99 @@
 .profile-main {
     padding: 20px;
 }
+
+.tabs {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 170px;
+    margin-top: 20vh;
+}
+
+.tab {
+    padding: 10px 20px;
+    background-color: #f0f0f000;
+    border: none;
+    border-bottom: 4px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.3s, border-bottom-color 0.3s;
+    overflow-x: scroll;
+
+}
+
+.tab.active {
+    border-top: 2px solid transparent;
+    background-color: #ffffff00;
+    border-bottom-color: #333;
+    border-top-color: #333;
+}
+
+.tab:hover {
+    background-color: #e1e1e1;
+}
+
+.tab-content {
+    margin-top: 20px;
+    height: 100vh;
+    width: 100%;
+    padding: 20px;
+    margin-left: 50px;
+}
+
+.profile-tab-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-main-tab-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.profile-img {
+    margin-right: 20px;
+}
+
+.profile-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-button-group {
+    display: flex;
+    margin-top: 20px;
+}
+
+.mandotory {
+    font-size: 12px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+    .tabs {
+        flex-direction: row;
+        width: 100%;
+        margin-top: 6px;
+        overflow-x: scroll;
+    }
+
+    .profile-tab-container {
+        flex-direction: column;
+    }
+
+    .tab-content {
+        margin-left: 0;
+        width: 90%;
+    }
+
+    .profile-main-tab-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .profile-img {
+        margin-bottom: 10px;
+    }
+}

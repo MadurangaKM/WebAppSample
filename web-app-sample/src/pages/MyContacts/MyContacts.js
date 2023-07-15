@@ -25,6 +25,7 @@ const MyContacts = (props) => {
 
   useEffect(() => {
     filterContacts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contacts, genderFilter, nationalityFilter]);
 
   const filterContacts = () => {

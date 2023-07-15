@@ -43,6 +43,8 @@
 
 .contact-card-image {
     margin-left: 16px;
+    min-width: 120px;
+    max-width: 130px;
 }
 
 .pagination {
@@ -135,5 +137,9 @@
 
     .filters {
         margin-bottom: 20px;
+    }
+
+    .contact-card-content {
+        word-break: break-all;
     }
 }
