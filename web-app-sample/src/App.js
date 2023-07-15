@@ -43,6 +43,20 @@ function App() {
         />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <div
+        style={{
+          cursor: "pointer",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontWeight: "lighter",
+        }}
+        onClick={() => {
+          window.open("https://www.maduranga.me/", "_blank");
+        }}
+      >
+        <p>© {new Date().getFullYear()} maduranga.me</p>
+      </div>
     </div>
   );
 }
